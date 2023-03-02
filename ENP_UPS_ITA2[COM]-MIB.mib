@@ -1,0 +1,1908 @@
+------------------------------------------------------------
+-- EMERSON NETWORK POWER
+-- DCS MIB
+------------------------------------------------------------
+
+DCS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,Integer32, Counter32, enterprises		FROM SNMPv2-SMI
+	TEXTUAL-CONVENTION, DisplayString, DateAndTime											FROM SNMPv2-TC;
+	
+------------------------------------------------------------
+-- Node definitions
+------------------------------------------------------------
+dcs MODULE-IDENTITY
+	LAST-UPDATED "201109190000Z"
+	ORGANIZATION "EMERSON NETWORK POWER (ENP)"
+	CONTACT-INFO "EMERSON NETWORK POWER (ENP)"
+	DESCRIPTION  "EMERSON NETWORK POWER (ENP)"
+	REVISION     "201109190000Z"
+	DESCRIPTION  "EMERSON NETWORK POWER (ENP) DCS MIB."
+	::= { enp 3 }
+	
+
+
+enp OBJECT IDENTIFIER ::= { enterprises 13400 }
+
+
+------------------------------------------------------------
+-- Textual conventions
+------------------------------------------------------------
+
+AlarmSeverity ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		The severity of the alarm. One of
+		(1) informational
+		(2) warning
+		(3) critical"
+	SYNTAX INTEGER {
+		informational(1),
+		warning(2),
+		critical(3) }
+		
+AlarmStatusChange ::= TEXTUAL-CONVENTION
+	STATUS current
+	DESCRIPTION "
+		Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	SYNTAX INTEGER {
+		activated(0),
+		deactivated(1) }
+		
+		
+------------------------------------------------------------
+-- System Info{ 13400.3.1 }
+------------------------------------------------------------
+
+systemInfo OBJECT IDENTIFIER ::=  { dcs 1 }
+
+systemLoaction OBJECT-TYPE
+		SYNTAX 			DisplayString
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"Where is this Uint"
+		::= 			{ systemInfo 1 }
+
+systemEquipNum OBJECT-TYPE
+		SYNTAX 			Integer32
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"System Equipment Number"
+		::=				{ systemInfo 2 }
+		
+systemEquipListTable OBJECT-TYPE
+		SYNTAX 			SEQUENCE OF SystemEquipListEntry
+		MAX-ACCESS 		not-accessible
+		STATUS 			current
+		DESCRIPTION 	"System Equipment List Table"
+		::= 			{ systemInfo 3 }
+	
+systemEquipListEntry OBJECT-TYPE
+		SYNTAX 			SystemEquipListEntry
+		MAX-ACCESS 		not-accessible
+		STATUS 			current
+		DESCRIPTION 	"System Equipment List Entry"
+		INDEX 			{ systemEquipListIndex }
+		::= 			{ systemEquipListTable 1 }
+
+SystemEquipListEntry ::= SEQUENCE {
+		systemEquipListIndex 		Integer32,
+		systemEquipTypeName			DisplayString,
+		systemEquipID				Integer32,
+		systemEquipTypeID	 		Integer32}
+	
+systemEquipListIndex OBJECT-TYPE
+		SYNTAX 			Integer32(1..64)
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"System Equipment List Index"
+		::=				{ systemEquipListEntry 1 }
+		
+systemEquipTypeName OBJECT-TYPE
+		SYNTAX 			DisplayString
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"System Equipment Type Name"
+		::= 			{ systemEquipListEntry 2 }
+		
+systemEquipID OBJECT-TYPE
+		SYNTAX 			Integer32
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"System Equipment ID"
+		::= 			{ systemEquipListEntry 3 }
+
+systemEquipTypeID OBJECT-TYPE
+		SYNTAX 			Integer32
+		MAX-ACCESS 		read-only
+		STATUS 			current
+		DESCRIPTION 	"System Equipment Type ID"
+		::= 			{ systemEquipListEntry 4 }
+
+
+------------------------------------------------------------
+-- Ups { 13400.3.4 }
+------------------------------------------------------------
+ups OBJECT IDENTIFIER ::=  { dcs 4 }
+
+
+------------------------------------------------------------
+-- Ita2com { 13400.3.4.491 }
+------------------------------------------------------------
+ups-Ita2com OBJECT IDENTIFIER ::= { ups 491 }
+upsIta2comTable OBJECT-TYPE
+		SYNTAX			SEQUENCE OF UpsIta2comEntry
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION	"upsIta2comTable"
+		::=			{ ups-Ita2com 1 }
+upsIta2comEntry OBJECT-TYPE
+		SYNTAX			UpsIta2comEntry
+		MAX-ACCESS		not-accessible
+		STATUS			current
+		DESCRIPTION		"upsIta2comEntry"
+		INDEX			{ upsIta2comIndex }
+		::=				{ upsIta2comTable 1 }
+UpsIta2comEntry ::= SEQUENCE {
+		upsIta2comIndex					Integer32,
+		upsIta2com_2_PhaseAinputVoltage					Integer32,
+		upsIta2com_3_PhaseBinputVoltage					Integer32,
+		upsIta2com_4_PhaseCinputVoltage					Integer32,
+		upsIta2com_5_PhaseAOutputVoltage					Integer32,
+		upsIta2com_6_PhaseBOutputVoltage					Integer32,
+		upsIta2com_7_PhaseCOutputVoltage					Integer32,
+		upsIta2com_8_phaseAOutputCurrent					Integer32,
+		upsIta2com_9_phaseBOutputCurrent					Integer32,
+		upsIta2com_10_phaseCOutputCurrent					Integer32,
+		upsIta2com_11_Outputfrequency					Integer32,
+		upsIta2com_12_InputPhaseNumber					INTEGER,
+		upsIta2com_13_lineABinputVoltage					Integer32,
+		upsIta2com_14_lineBCinputVoltage					Integer32,
+		upsIta2com_15_lineCAinputVoltage					Integer32,
+		upsIta2com_16_PhaseAinputCurrent					Integer32,
+		upsIta2com_17_PhaseBinputCurrent					Integer32,
+		upsIta2com_18_PhaseCinputCurrent					Integer32,
+		upsIta2com_19_Systeminputfrequency					Integer32,
+		upsIta2com_20_PhaseAInputpowerfactor					Integer32,
+		upsIta2com_21_PhaseBInputpowerfactor					Integer32,
+		upsIta2com_22_PhaseCInputpowerfactor					Integer32,
+		upsIta2com_23_BypassAvoltageA					Integer32,
+		upsIta2com_24_BypassBvoltageB					Integer32,
+		upsIta2com_25_BypassCvoltageC					Integer32,
+		upsIta2com_26_BypasslineABvoltage					Integer32,
+		upsIta2com_27_BypasslineBCvoltage					Integer32,
+		upsIta2com_28_BypasslineCAvoltage					Integer32,
+		upsIta2com_29_BypassFrequency					Integer32,
+		upsIta2com_30_OutputPhaseNumber					INTEGER,
+		upsIta2com_31_PhaseAOutputpowerfactor					Integer32,
+		upsIta2com_32_PhaseBOutputpowerfactor					Integer32,
+		upsIta2com_33_PhaseCOutputpowerfactor					Integer32,
+		upsIta2com_34_LocalPhaseAOutputpeakratio					Integer32,
+		upsIta2com_35_LocalPhaseBOutputpeakratio					Integer32,
+		upsIta2com_36_LocalPhaseCOutputpeakratio					Integer32,
+		upsIta2com_37_LocalPhaseAOutputActivePow					Integer32,
+		upsIta2com_38_LocalPhaseBOutputActivePow					Integer32,
+		upsIta2com_39_LocalPhaseCOutputActivePow					Integer32,
+		upsIta2com_40_LocalPhaseAOutputApparentP					Integer32,
+		upsIta2com_41_LocalPhaseBOutputApparentP					Integer32,
+		upsIta2com_42_LocalPhaseCOutputApparentP					Integer32,
+		upsIta2com_43_LocalPhaseAOutputLoadPerce					Integer32,
+		upsIta2com_44_LocalPhaseBOutputLoadPerce					Integer32,
+		upsIta2com_45_LocalPhaseCOutputLoadPerce					Integer32,
+		upsIta2com_46_SystemPhaseAOutputPowerfac					Integer32,
+		upsIta2com_47_SystemPhaseBOutputPowerfac					Integer32,
+		upsIta2com_48_SystemPhaseCOutputPowerfac					Integer32,
+		upsIta2com_49_SystemPhaseAOutputActivePo					Integer32,
+		upsIta2com_50_SystemPhaseBOutputActivePo					Integer32,
+		upsIta2com_51_SystemPhaseCOutputActivePo					Integer32,
+		upsIta2com_52_SystemPhaseAOutputApparent					Integer32,
+		upsIta2com_53_SystemPhaseBOutputApparent					Integer32,
+		upsIta2com_54_SystemPhaseCOutputApparent					Integer32,
+		upsIta2com_55_ParallelMachineNumber					Integer32,
+		upsIta2com_56_UPSRunningTime					Integer32,
+		upsIta2com_57_Batteryvoltage					Integer32,
+		upsIta2com_58_Batterychargingcurrent					Integer32,
+		upsIta2com_59_Batterydischargecurrent					Integer32,
+		upsIta2com_60_Negativebatteryvoltage					Integer32,
+		upsIta2com_61_Negativebatterychargecurrent					Integer32,
+		upsIta2com_62_Negativebatterydischargecurr					Integer32,
+		upsIta2com_63_Batterybackuptime					Integer32,
+		upsIta2com_64_Batterytemperature					Integer32,
+		upsIta2com_65_Ambienttemperature					Integer32,
+		upsIta2com_66_BatteryCurrentCapacity					Integer32,
+		upsIta2com_67_Batterydischargetimes					Integer32,
+		upsIta2com_68_Inputpower					Integer32,
+		upsIta2com_69_Outputpower					Integer32,
+		upsIta2com_70_Powersupply					INTEGER,
+		upsIta2com_71_Inputpowerstatus					INTEGER,
+		upsIta2com_72_Batterystatus					INTEGER,
+		upsIta2com_73_Batterynegativegroupstatus					INTEGER,
+		upsIta2com_74_ChargerStatus					INTEGER,
+		upsIta2com_75_parallelsystempowerstate					INTEGER,
+		upsIta2com_76_Ineernetworkconnectionstatus					INTEGER,
+		upsIta2com_77_Outlet1switchstatus					INTEGER,
+		upsIta2com_78_Outlet2switchstatus					INTEGER,
+		upsIta2com_79_Inputabnormal					INTEGER,
+		upsIta2com_80_Systemovertemp					INTEGER,
+		upsIta2com_81_Systembatterylowprewarning					INTEGER,
+		upsIta2com_82_InputPhaseReversed					INTEGER,
+		upsIta2com_83_InputNeutralLost					INTEGER,
+		upsIta2com_84_InputGroundLost					INTEGER,
+		upsIta2com_85_Rectifieroverload					INTEGER,
+		upsIta2com_86_Batterycabinetnotconnected					INTEGER,
+		upsIta2com_87_Inverteroverload					INTEGER,
+		upsIta2com_88_LBSabnormal					INTEGER,
+		upsIta2com_89_Outputpending					INTEGER,
+		upsIta2com_90_Outputdisabled					INTEGER,
+		upsIta2com_91_Bypassabnormal					INTEGER,
+		upsIta2com_92_BypassabnormalinECOmode					INTEGER,
+		upsIta2com_93_Bypassphasereversed					INTEGER,
+		upsIta2com_94_Bypassovercurrent					INTEGER,
+		upsIta2com_95_Bypasscableconnectionabnorma					INTEGER,
+		upsIta2com_96_BatteryReversed					INTEGER,
+		upsIta2com_97_Batterylowprewarning					INTEGER,
+		upsIta2com_98_BatteryVoltabnormal					INTEGER,
+		upsIta2com_99_Nobattery					INTEGER,
+		upsIta2com_100_Batteryovertemp					INTEGER,
+		upsIta2com_101_Batteryaging					INTEGER,
+		upsIta2com_102_Batterytestfailure					INTEGER,
+		upsIta2com_103_Batteryseriesnotqualified					INTEGER,
+		upsIta2com_104_Fanfailure					INTEGER,
+		upsIta2com_105_REPO					INTEGER,
+		upsIta2com_106_Electricleakalarm					INTEGER,
+		upsIta2com_107_Versionincompatible					INTEGER,
+		upsIta2com_108_OutputLPEshort					INTEGER,
+		upsIta2com_109_Lossofredundancy					INTEGER,
+		upsIta2com_110_Systemoverload					INTEGER,
+		upsIta2com_111_Loadsharingabnormal					INTEGER,
+		upsIta2com_112_Systemparallelsettingsasync					INTEGER,
+		upsIta2com_113_Localparallelsettingsasync					INTEGER,
+		upsIta2com_114_Onmaintenancebypass					INTEGER,
+		upsIta2com_115_Batterymode					INTEGER,
+		upsIta2com_116_Bypassmode					INTEGER,
+		upsIta2com_117_DCbusabnormal					INTEGER,
+		upsIta2com_118_RectifierFault					INTEGER,
+		upsIta2com_119_DCDCfault					INTEGER,
+		upsIta2com_120_ChargerFault					INTEGER,
+		upsIta2com_121_Inputbackfeed					INTEGER,
+		upsIta2com_122_InverterFault					INTEGER,
+		upsIta2com_123_InverterRelaywelded					INTEGER,
+		upsIta2com_124_Bypassbackfeed					INTEGER,
+		upsIta2com_125_Auxiliarypowerfault					INTEGER,
+		upsIta2com_126_InternalCommunicationsFault					INTEGER,
+		upsIta2com_127_Outputshortcircuit					INTEGER,
+		upsIta2com_128_Outputoffandvoltageisnotz					INTEGER,
+		upsIta2com_129_ParallelCommunicationbreakdow					INTEGER,
+		upsIta2com_130_shutoffduetoOvertemp					INTEGER,
+		upsIta2com_131_Outputoffoverloadandbypass					INTEGER,
+		upsIta2com_132_Loadoffduetooutputshort					INTEGER,
+		upsIta2com_133_EODturnoff					INTEGER,
+		upsIta2com_134_Remoteshutdown					INTEGER,
+		upsIta2com_135_Guaranteedshutdown					INTEGER,
+		upsIta2com_136_Loadoffduetoshutdownonbat					INTEGER,
+		upsIta2com_137_Outputoffbypassunavailable					INTEGER,
+		upsIta2com_138_Remotepoweron					INTEGER,
+		upsIta2com_139_Remoteshutoff					INTEGER,
+		upsIta2com_140_Batteryteststarted					INTEGER,
+		upsIta2com_141_Batteryteststopped					INTEGER,
+		upsIta2com_142_LocalsettingssyncOK					INTEGER,
+		upsIta2com_143_SystemsettingssyncOK					INTEGER,
+		upsIta2com_144_Batterytoutilitytransition					INTEGER,
+		upsIta2com_145_Manualshutdown					INTEGER,
+		upsIta2com_146_Operatingoninverter					INTEGER,
+		upsIta2com_147_Manualpoweron					INTEGER,
+		upsIta2com_148_BatteryRunningTime					Integer32,
+		upsIta2com_149_BatteryDischargingTime					Integer32,
+		upsIta2com_150_ParallelNoabnormal					INTEGER,
+		upsIta2com_151_Parallelbypasscableconnectio					INTEGER,
+		upsIta2com_152_Onintelligentsleepmode					INTEGER,
+		upsIta2com_153_Batterycabinetconnectabnorma					INTEGER,
+		upsIta2com_154_Parallelcableconnectionabnor					INTEGER,
+		upsIta2com_155_Systemfault					INTEGER,
+		upsIta2com_156_CommunicationStatus					INTEGER,
+		upsIta2com_157_RemoteBatterySelfTest					INTEGER,
+		upsIta2com_158_RemoteOpenorShutDown					INTEGER,
+		upsIta2com_159_Remotemaintenancebatteryself					INTEGER,
+		upsIta2com_160_TurnOffUPSOutput					INTEGER,
+		upsIta2com_161_DelayTimeofSelfStart					Integer32,
+		upsIta2com_162_DelayTimeofRemoteShutDown					Integer32,
+		upsIta2com_163_IntervalofBatterySelfTest					INTEGER,
+		upsIta2com_164_UPSWorkingMode					INTEGER,
+		upsIta2com_165_SelfStartSetting					INTEGER,
+		upsIta2com_166_SettingsRedundance					INTEGER,
+		upsIta2com_167_RemoteOpenDelayTime					Integer32,
+		upsIta2com_168_LogNumberSet					Integer32 }
+upsIta2comIndex OBJECT-TYPE
+		SYNTAX Integer32(1..168)
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com System Entry Index."
+		::= { upsIta2comEntry 1 }
+upsIta2com_2_PhaseAinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_1_PhaseAinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 2 }
+upsIta2com_3_PhaseBinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_2_PhaseBinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 3 }
+upsIta2com_4_PhaseCinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_3_PhaseCinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 4 }
+upsIta2com_5_PhaseAOutputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_4_PhaseAOutputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 5 }
+upsIta2com_6_PhaseBOutputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_5_PhaseBOutputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 6 }
+upsIta2com_7_PhaseCOutputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_6_PhaseCOutputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 7 }
+upsIta2com_8_phaseAOutputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_7_phaseAOutputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 8 }
+upsIta2com_9_phaseBOutputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_8_phaseBOutputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 9 }
+upsIta2com_10_phaseCOutputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_9_phaseCOutputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 10 }
+upsIta2com_11_Outputfrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_10_Outputfrequency stored as 0.1HZ."
+		::= { upsIta2comEntry 11 }
+upsIta2com_12_InputPhaseNumber OBJECT-TYPE
+		SYNTAX INTEGER {
+			unknown(0),
+			simplex(1),
+			duplex(2),
+			nondischargeandnonrechargea(3) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_11_InputPhaseNumber status."
+		::= { upsIta2comEntry 12 }
+upsIta2com_13_lineABinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_12_lineABinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 13 }
+upsIta2com_14_lineBCinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_13_lineBCinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 14 }
+upsIta2com_15_lineCAinputVoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_14_lineCAinputVoltage stored as 0.1V."
+		::= { upsIta2comEntry 15 }
+upsIta2com_16_PhaseAinputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_15_PhaseAinputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 16 }
+upsIta2com_17_PhaseBinputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_16_PhaseBinputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 17 }
+upsIta2com_18_PhaseCinputCurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_17_PhaseCinputCurrent stored as 0.1A."
+		::= { upsIta2comEntry 18 }
+upsIta2com_19_Systeminputfrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_18_Systeminputfrequency stored as 0.1HZ."
+		::= { upsIta2comEntry 19 }
+upsIta2com_20_PhaseAInputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_19_PhaseAInputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 20 }
+upsIta2com_21_PhaseBInputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_20_PhaseBInputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 21 }
+upsIta2com_22_PhaseCInputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_21_PhaseCInputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 22 }
+upsIta2com_23_BypassAvoltageA OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_22_BypassAvoltageA stored as 0.1V."
+		::= { upsIta2comEntry 23 }
+upsIta2com_24_BypassBvoltageB OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_23_BypassBvoltageB stored as 0.1V."
+		::= { upsIta2comEntry 24 }
+upsIta2com_25_BypassCvoltageC OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_24_BypassCvoltageC stored as 0.1V."
+		::= { upsIta2comEntry 25 }
+upsIta2com_26_BypasslineABvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_25_BypasslineABvoltage stored as 0.1V."
+		::= { upsIta2comEntry 26 }
+upsIta2com_27_BypasslineBCvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_26_BypasslineBCvoltage stored as 0.1V."
+		::= { upsIta2comEntry 27 }
+upsIta2com_28_BypasslineCAvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_27_BypasslineCAvoltage stored as 0.1V."
+		::= { upsIta2comEntry 28 }
+upsIta2com_29_BypassFrequency OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_28_BypassFrequency stored as 0.1HZ."
+		::= { upsIta2comEntry 29 }
+upsIta2com_30_OutputPhaseNumber OBJECT-TYPE
+		SYNTAX INTEGER {
+			unknown(0),
+			simplex(1),
+			duplex(2),
+			nondischargeandnonrechargea(3) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_29_OutputPhaseNumber status."
+		::= { upsIta2comEntry 30 }
+upsIta2com_31_PhaseAOutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_30_PhaseAOutputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 31 }
+upsIta2com_32_PhaseBOutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_31_PhaseBOutputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 32 }
+upsIta2com_33_PhaseCOutputpowerfactor OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_32_PhaseCOutputpowerfactor stored as 0.1."
+		::= { upsIta2comEntry 33 }
+upsIta2com_34_LocalPhaseAOutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_33_LocalPhaseAOutputpeakratio stored as 0.1."
+		::= { upsIta2comEntry 34 }
+upsIta2com_35_LocalPhaseBOutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_34_LocalPhaseBOutputpeakratio stored as 0.1."
+		::= { upsIta2comEntry 35 }
+upsIta2com_36_LocalPhaseCOutputpeakratio OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_35_LocalPhaseCOutputpeakratio stored as 0.1."
+		::= { upsIta2comEntry 36 }
+upsIta2com_37_LocalPhaseAOutputActivePow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_36_LocalPhaseAOutputActivePow stored as 0.1kW."
+		::= { upsIta2comEntry 37 }
+upsIta2com_38_LocalPhaseBOutputActivePow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_37_LocalPhaseBOutputActivePow stored as 0.1kW."
+		::= { upsIta2comEntry 38 }
+upsIta2com_39_LocalPhaseCOutputActivePow OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_38_LocalPhaseCOutputActivePow stored as 0.1kW."
+		::= { upsIta2comEntry 39 }
+upsIta2com_40_LocalPhaseAOutputApparentP OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_39_LocalPhaseAOutputApparentP stored as 0.1KVA."
+		::= { upsIta2comEntry 40 }
+upsIta2com_41_LocalPhaseBOutputApparentP OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_40_LocalPhaseBOutputApparentP stored as 0.1KVA."
+		::= { upsIta2comEntry 41 }
+upsIta2com_42_LocalPhaseCOutputApparentP OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_41_LocalPhaseCOutputApparentP stored as 0.1KVA."
+		::= { upsIta2comEntry 42 }
+upsIta2com_43_LocalPhaseAOutputLoadPerce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_42_LocalPhaseAOutputLoadPerce stored as 0.1."
+		::= { upsIta2comEntry 43 }
+upsIta2com_44_LocalPhaseBOutputLoadPerce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_43_LocalPhaseBOutputLoadPerce stored as 0.1."
+		::= { upsIta2comEntry 44 }
+upsIta2com_45_LocalPhaseCOutputLoadPerce OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_44_LocalPhaseCOutputLoadPerce stored as 0.1."
+		::= { upsIta2comEntry 45 }
+upsIta2com_46_SystemPhaseAOutputPowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_45_SystemPhaseAOutputPowerfac stored as 0.1."
+		::= { upsIta2comEntry 46 }
+upsIta2com_47_SystemPhaseBOutputPowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_46_SystemPhaseBOutputPowerfac stored as 0.1."
+		::= { upsIta2comEntry 47 }
+upsIta2com_48_SystemPhaseCOutputPowerfac OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_47_SystemPhaseCOutputPowerfac stored as 0.1."
+		::= { upsIta2comEntry 48 }
+upsIta2com_49_SystemPhaseAOutputActivePo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_48_SystemPhaseAOutputActivePo stored as 0.1kW."
+		::= { upsIta2comEntry 49 }
+upsIta2com_50_SystemPhaseBOutputActivePo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_49_SystemPhaseBOutputActivePo stored as 0.1kW."
+		::= { upsIta2comEntry 50 }
+upsIta2com_51_SystemPhaseCOutputActivePo OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_50_SystemPhaseCOutputActivePo stored as 0.1kW."
+		::= { upsIta2comEntry 51 }
+upsIta2com_52_SystemPhaseAOutputApparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_51_SystemPhaseAOutputApparent stored as 0.1KVA."
+		::= { upsIta2comEntry 52 }
+upsIta2com_53_SystemPhaseBOutputApparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_52_SystemPhaseBOutputApparent stored as 0.1KVA."
+		::= { upsIta2comEntry 53 }
+upsIta2com_54_SystemPhaseCOutputApparent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_53_SystemPhaseCOutputApparent stored as 0.1KVA."
+		::= { upsIta2comEntry 54 }
+upsIta2com_55_ParallelMachineNumber OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_54_ParallelMachineNumber stored as 0.1."
+		::= { upsIta2comEntry 55 }
+upsIta2com_56_UPSRunningTime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_55_UPSRunningTime stored as 0.1day."
+		::= { upsIta2comEntry 56 }
+upsIta2com_57_Batteryvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_56_Batteryvoltage stored as 0.1V."
+		::= { upsIta2comEntry 57 }
+upsIta2com_58_Batterychargingcurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_57_Batterychargingcurrent stored as 0.1A."
+		::= { upsIta2comEntry 58 }
+upsIta2com_59_Batterydischargecurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_58_Batterydischargecurrent stored as 0.1A."
+		::= { upsIta2comEntry 59 }
+upsIta2com_60_Negativebatteryvoltage OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_59_Negativebatteryvoltage stored as 0.1V."
+		::= { upsIta2comEntry 60 }
+upsIta2com_61_Negativebatterychargecurrent OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_60_Negativebatterychargecurrent stored as 0.1A."
+		::= { upsIta2comEntry 61 }
+upsIta2com_62_Negativebatterydischargecurr OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_61_Negativebatterydischargecurr stored as 0.1A."
+		::= { upsIta2comEntry 62 }
+upsIta2com_63_Batterybackuptime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_62_Batterybackuptime stored as 0.1Min."
+		::= { upsIta2comEntry 63 }
+upsIta2com_64_Batterytemperature OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_63_Batterytemperature stored as 0.1degC."
+		::= { upsIta2comEntry 64 }
+upsIta2com_65_Ambienttemperature OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_64_Ambienttemperature stored as 0.1degC."
+		::= { upsIta2comEntry 65 }
+upsIta2com_66_BatteryCurrentCapacity OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_65_BatteryCurrentCapacity stored as 0.1."
+		::= { upsIta2comEntry 66 }
+upsIta2com_67_Batterydischargetimes OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_66_Batterydischargetimes stored as 0.1."
+		::= { upsIta2comEntry 67 }
+upsIta2com_68_Inputpower OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_67_Inputpower stored as 0.1KWH."
+		::= { upsIta2comEntry 68 }
+upsIta2com_69_Outputpower OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_68_Outputpower stored as 0.1KWH."
+		::= { upsIta2comEntry 69 }
+upsIta2com_70_Powersupply OBJECT-TYPE
+		SYNTAX INTEGER {
+			upsshutdown(0),
+			utilityonline(1),
+			onbattery(2),
+			onbypass(3),
+			upsonunionmode(4) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_69_Powersupply status."
+		::= { upsIta2comEntry 70 }
+upsIta2com_71_Inputpowerstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			utilityonline(0),
+			onbattery(1),
+			upsonunionmode(2),
+			upsshutdown(3) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_70_Inputpowerstatus status."
+		::= { upsIta2comEntry 71 }
+upsIta2com_72_Batterystatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			nondischargeandnonrechargea(0),
+			floatcharging(1),
+			equalizationcharging(2),
+			discharging(3),
+			inselftest(4),
+			nobattery(5) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_71_Batterystatus status."
+		::= { upsIta2comEntry 72 }
+upsIta2com_73_Batterynegativegroupstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			nondischargeandnonrechargea(0),
+			floatcharging(1),
+			equalizationcharging(2),
+			discharging(3),
+			inselftest(4),
+			nobattery(5) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_72_Batterynegativegroupstatus status."
+		::= { upsIta2comEntry 73 }
+upsIta2com_74_ChargerStatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			chargeron(0),
+			chargeroff(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_73_ChargerStatus status."
+		::= { upsIta2comEntry 74 }
+upsIta2com_75_parallelsystempowerstate OBJECT-TYPE
+		SYNTAX INTEGER {
+			maininverterpowersupply(0),
+			onbattery(1),
+			onbypass(2),
+			upsshutdown(3) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_74_parallelsystempowerstate status."
+		::= { upsIta2comEntry 75 }
+upsIta2com_76_Ineernetworkconnectionstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			connected(0),
+			disconnected(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_75_Ineernetworkconnectionstatus status."
+		::= { upsIta2comEntry 76 }
+upsIta2com_77_Outlet1switchstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			turnedon(0),
+			turnedoff(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_76_Outlet1switchstatus status."
+		::= { upsIta2comEntry 77 }
+upsIta2com_78_Outlet2switchstatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			turnedon(0),
+			turnedoff(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_77_Outlet2switchstatus status."
+		::= { upsIta2comEntry 78 }
+upsIta2com_79_Inputabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_78_Inputabnormal status."
+		::= { upsIta2comEntry 79 }
+upsIta2com_80_Systemovertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_79_Systemovertemp status."
+		::= { upsIta2comEntry 80 }
+upsIta2com_81_Systembatterylowprewarning OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_80_Systembatterylowprewarning status."
+		::= { upsIta2comEntry 81 }
+upsIta2com_82_InputPhaseReversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_81_InputPhaseReversed status."
+		::= { upsIta2comEntry 82 }
+upsIta2com_83_InputNeutralLost OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_82_InputNeutralLost status."
+		::= { upsIta2comEntry 83 }
+upsIta2com_84_InputGroundLost OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_83_InputGroundLost status."
+		::= { upsIta2comEntry 84 }
+upsIta2com_85_Rectifieroverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_84_Rectifieroverload status."
+		::= { upsIta2comEntry 85 }
+upsIta2com_86_Batterycabinetnotconnected OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_85_Batterycabinetnotconnected status."
+		::= { upsIta2comEntry 86 }
+upsIta2com_87_Inverteroverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_86_Inverteroverload status."
+		::= { upsIta2comEntry 87 }
+upsIta2com_88_LBSabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_87_LBSabnormal status."
+		::= { upsIta2comEntry 88 }
+upsIta2com_89_Outputpending OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_88_Outputpending status."
+		::= { upsIta2comEntry 89 }
+upsIta2com_90_Outputdisabled OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_89_Outputdisabled status."
+		::= { upsIta2comEntry 90 }
+upsIta2com_91_Bypassabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_90_Bypassabnormal status."
+		::= { upsIta2comEntry 91 }
+upsIta2com_92_BypassabnormalinECOmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_91_BypassabnormalinECOmode status."
+		::= { upsIta2comEntry 92 }
+upsIta2com_93_Bypassphasereversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_92_Bypassphasereversed status."
+		::= { upsIta2comEntry 93 }
+upsIta2com_94_Bypassovercurrent OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_93_Bypassovercurrent status."
+		::= { upsIta2comEntry 94 }
+upsIta2com_95_Bypasscableconnectionabnorma OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_94_Bypasscableconnectionabnorma status."
+		::= { upsIta2comEntry 95 }
+upsIta2com_96_BatteryReversed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_95_BatteryReversed status."
+		::= { upsIta2comEntry 96 }
+upsIta2com_97_Batterylowprewarning OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_96_Batterylowprewarning status."
+		::= { upsIta2comEntry 97 }
+upsIta2com_98_BatteryVoltabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_97_BatteryVoltabnormal status."
+		::= { upsIta2comEntry 98 }
+upsIta2com_99_Nobattery OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_98_Nobattery status."
+		::= { upsIta2comEntry 99 }
+upsIta2com_100_Batteryovertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_99_Batteryovertemp status."
+		::= { upsIta2comEntry 100 }
+upsIta2com_101_Batteryaging OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_100_Batteryaging status."
+		::= { upsIta2comEntry 101 }
+upsIta2com_102_Batterytestfailure OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_101_Batterytestfailure status."
+		::= { upsIta2comEntry 102 }
+upsIta2com_103_Batteryseriesnotqualified OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_102_Batteryseriesnotqualified status."
+		::= { upsIta2comEntry 103 }
+upsIta2com_104_Fanfailure OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_103_Fanfailure status."
+		::= { upsIta2comEntry 104 }
+upsIta2com_105_REPO OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_104_REPO status."
+		::= { upsIta2comEntry 105 }
+upsIta2com_106_Electricleakalarm OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_105_Electricleakalarm status."
+		::= { upsIta2comEntry 106 }
+upsIta2com_107_Versionincompatible OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_106_Versionincompatible status."
+		::= { upsIta2comEntry 107 }
+upsIta2com_108_OutputLPEshort OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_107_OutputLPEshort status."
+		::= { upsIta2comEntry 108 }
+upsIta2com_109_Lossofredundancy OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_108_Lossofredundancy status."
+		::= { upsIta2comEntry 109 }
+upsIta2com_110_Systemoverload OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_109_Systemoverload status."
+		::= { upsIta2comEntry 110 }
+upsIta2com_111_Loadsharingabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_110_Loadsharingabnormal status."
+		::= { upsIta2comEntry 111 }
+upsIta2com_112_Systemparallelsettingsasync OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_111_Systemparallelsettingsasync status."
+		::= { upsIta2comEntry 112 }
+upsIta2com_113_Localparallelsettingsasync OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_112_Localparallelsettingsasync status."
+		::= { upsIta2comEntry 113 }
+upsIta2com_114_Onmaintenancebypass OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_113_Onmaintenancebypass status."
+		::= { upsIta2comEntry 114 }
+upsIta2com_115_Batterymode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_114_Batterymode status."
+		::= { upsIta2comEntry 115 }
+upsIta2com_116_Bypassmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_115_Bypassmode status."
+		::= { upsIta2comEntry 116 }
+upsIta2com_117_DCbusabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_116_DCbusabnormal status."
+		::= { upsIta2comEntry 117 }
+upsIta2com_118_RectifierFault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_117_RectifierFault status."
+		::= { upsIta2comEntry 118 }
+upsIta2com_119_DCDCfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_118_DCDCfault status."
+		::= { upsIta2comEntry 119 }
+upsIta2com_120_ChargerFault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_119_ChargerFault status."
+		::= { upsIta2comEntry 120 }
+upsIta2com_121_Inputbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_120_Inputbackfeed status."
+		::= { upsIta2comEntry 121 }
+upsIta2com_122_InverterFault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_121_InverterFault status."
+		::= { upsIta2comEntry 122 }
+upsIta2com_123_InverterRelaywelded OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_122_InverterRelaywelded status."
+		::= { upsIta2comEntry 123 }
+upsIta2com_124_Bypassbackfeed OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_123_Bypassbackfeed status."
+		::= { upsIta2comEntry 124 }
+upsIta2com_125_Auxiliarypowerfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_124_Auxiliarypowerfault status."
+		::= { upsIta2comEntry 125 }
+upsIta2com_126_InternalCommunicationsFault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_125_InternalCommunicationsFault status."
+		::= { upsIta2comEntry 126 }
+upsIta2com_127_Outputshortcircuit OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_126_Outputshortcircuit status."
+		::= { upsIta2comEntry 127 }
+upsIta2com_128_Outputoffandvoltageisnotz OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_127_Outputoffandvoltageisnotz status."
+		::= { upsIta2comEntry 128 }
+upsIta2com_129_ParallelCommunicationbreakdow OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_128_ParallelCommunicationbreakdow status."
+		::= { upsIta2comEntry 129 }
+upsIta2com_130_shutoffduetoOvertemp OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_129_shutoffduetoOvertemp status."
+		::= { upsIta2comEntry 130 }
+upsIta2com_131_Outputoffoverloadandbypass OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_130_Outputoffoverloadandbypass status."
+		::= { upsIta2comEntry 131 }
+upsIta2com_132_Loadoffduetooutputshort OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_131_Loadoffduetooutputshort status."
+		::= { upsIta2comEntry 132 }
+upsIta2com_133_EODturnoff OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_132_EODturnoff status."
+		::= { upsIta2comEntry 133 }
+upsIta2com_134_Remoteshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_133_Remoteshutdown status."
+		::= { upsIta2comEntry 134 }
+upsIta2com_135_Guaranteedshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_134_Guaranteedshutdown status."
+		::= { upsIta2comEntry 135 }
+upsIta2com_136_Loadoffduetoshutdownonbat OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_135_Loadoffduetoshutdownonbat status."
+		::= { upsIta2comEntry 136 }
+upsIta2com_137_Outputoffbypassunavailable OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_136_Outputoffbypassunavailable status."
+		::= { upsIta2comEntry 137 }
+upsIta2com_138_Remotepoweron OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_137_Remotepoweron status."
+		::= { upsIta2comEntry 138 }
+upsIta2com_139_Remoteshutoff OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_138_Remoteshutoff status."
+		::= { upsIta2comEntry 139 }
+upsIta2com_140_Batteryteststarted OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_139_Batteryteststarted status."
+		::= { upsIta2comEntry 140 }
+upsIta2com_141_Batteryteststopped OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_140_Batteryteststopped status."
+		::= { upsIta2comEntry 141 }
+upsIta2com_142_LocalsettingssyncOK OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_141_LocalsettingssyncOK status."
+		::= { upsIta2comEntry 142 }
+upsIta2com_143_SystemsettingssyncOK OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_142_SystemsettingssyncOK status."
+		::= { upsIta2comEntry 143 }
+upsIta2com_144_Batterytoutilitytransition OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_143_Batterytoutilitytransition status."
+		::= { upsIta2comEntry 144 }
+upsIta2com_145_Manualshutdown OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_144_Manualshutdown status."
+		::= { upsIta2comEntry 145 }
+upsIta2com_146_Operatingoninverter OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_145_Operatingoninverter status."
+		::= { upsIta2comEntry 146 }
+upsIta2com_147_Manualpoweron OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			abnormal(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_146_Manualpoweron status."
+		::= { upsIta2comEntry 147 }
+upsIta2com_148_BatteryRunningTime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_147_BatteryRunningTime stored as 0.1s."
+		::= { upsIta2comEntry 148 }
+upsIta2com_149_BatteryDischargingTime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_148_BatteryDischargingTime stored as 0.1s."
+		::= { upsIta2comEntry 149 }
+upsIta2com_150_ParallelNoabnormal OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_149_ParallelNoabnormal status."
+		::= { upsIta2comEntry 150 }
+upsIta2com_151_Parallelbypasscableconnectio OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_150_Parallelbypasscableconnectio status."
+		::= { upsIta2comEntry 151 }
+upsIta2com_152_Onintelligentsleepmode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_151_Onintelligentsleepmode status."
+		::= { upsIta2comEntry 152 }
+upsIta2com_153_Batterycabinetconnectabnorma OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_152_Batterycabinetconnectabnorma status."
+		::= { upsIta2comEntry 153 }
+upsIta2com_154_Parallelcableconnectionabnor OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_153_Parallelcableconnectionabnor status."
+		::= { upsIta2comEntry 154 }
+upsIta2com_155_Systemfault OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			alarm(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_154_Systemfault status."
+		::= { upsIta2comEntry 155 }
+upsIta2com_156_CommunicationStatus OBJECT-TYPE
+		SYNTAX INTEGER {
+			normal(0),
+			failure(1) }
+		MAX-ACCESS read-only
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_155_CommunicationStatus status."
+		::= { upsIta2comEntry 156 }
+upsIta2com_157_RemoteBatterySelfTest OBJECT-TYPE
+		SYNTAX INTEGER {
+			start(0),
+			end(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_156_RemoteBatterySelfTest status."
+		::= { upsIta2comEntry 157 }
+upsIta2com_158_RemoteOpenorShutDown OBJECT-TYPE
+		SYNTAX INTEGER {
+			openups(0),
+			invertershutdown(1),
+			instantlycloseoutput(2),
+			openinverterwithdelay(3),
+			closeoutputwithdelay(4),
+			delayedshutdowncancellation(5) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_157_RemoteOpenorShutDown status."
+		::= { upsIta2comEntry 158 }
+upsIta2com_159_Remotemaintenancebatteryself OBJECT-TYPE
+		SYNTAX INTEGER {
+			start(0),
+			end(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_158_Remotemaintenancebatteryself status."
+		::= { upsIta2comEntry 159 }
+upsIta2com_160_TurnOffUPSOutput OBJECT-TYPE
+		SYNTAX INTEGER {
+			no(0),
+			yes(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_159_TurnOffUPSOutput status."
+		::= { upsIta2comEntry 160 }
+upsIta2com_161_DelayTimeofSelfStart OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_160_DelayTimeofSelfStart stored as 1Sec."
+		::= { upsIta2comEntry 161 }
+upsIta2com_162_DelayTimeofRemoteShutDown OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_161_DelayTimeofRemoteShutDown stored as 1Sec."
+		::= { upsIta2comEntry 162 }
+upsIta2com_163_IntervalofBatterySelfTest OBJECT-TYPE
+		SYNTAX INTEGER {
+			forbidden(0),
+			8weeks(1),
+			12weeks(2),
+			16weeks(3),
+			20weeks(4),
+			26weeks(5) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_162_IntervalofBatterySelfTest status."
+		::= { upsIta2comEntry 163 }
+upsIta2com_164_UPSWorkingMode OBJECT-TYPE
+		SYNTAX INTEGER {
+			normalmode(0),
+			ecomode(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_163_UPSWorkingMode status."
+		::= { upsIta2comEntry 164 }
+upsIta2com_165_SelfStartSetting OBJECT-TYPE
+		SYNTAX INTEGER {
+			forbidden(0),
+			allow(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_164_SelfStartSetting status."
+		::= { upsIta2comEntry 165 }
+upsIta2com_166_SettingsRedundance OBJECT-TYPE
+		SYNTAX INTEGER {
+			no(0),
+			yes(1) }
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_165_SettingsRedundance status."
+		::= { upsIta2comEntry 166 }
+upsIta2com_167_RemoteOpenDelayTime OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_166_RemoteOpenDelayTime stored as 1Sec."
+		::= { upsIta2comEntry 167 }
+upsIta2com_168_LogNumberSet OBJECT-TYPE
+		SYNTAX Integer32
+		
+		MAX-ACCESS read-write
+		STATUS current
+		DESCRIPTION
+		"upsIta2com_167_LogNumberSet stored as 1."
+		::= { upsIta2comEntry 168 }
+
+
+
+------------------------------------------------------------
+-- System Alarm Trap Table { 13400.3.254 }
+------------------------------------------------------------
+		
+systemAlarmTrapTable OBJECT-TYPE
+	SYNTAX SEQUENCE OF SystemAlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "System Table holding information about the submitted alarm traps."
+	::= { dcs 254 }
+
+systemAlarmTrapEntry OBJECT-TYPE
+	SYNTAX SystemAlarmTrapEntry
+	MAX-ACCESS not-accessible
+	STATUS current
+	DESCRIPTION "An entry (conceptual row) in the systemAlarmTrapTable."
+	INDEX { systemAlarmIndex }
+	::= { systemAlarmTrapTable 1 }
+
+SystemAlarmTrapEntry ::= SEQUENCE {
+	systemAlarmIndex 			Counter32,
+	systemAlarmTime 			DisplayString,
+	systemAlarmStatusChange 	AlarmStatusChange,
+	systemAlarmSeverity 		AlarmSeverity,
+	systemAlarmDescription 		DisplayString,
+	systemAlarmId 				Integer32,
+	systemAlarmEquipId 			Integer32,
+	systemAlarmEquipTypeId		Integer32}
+
+systemAlarmIndex OBJECT-TYPE
+	SYNTAX Counter32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "The unique sequence number of this alarm trap."
+	::= { systemAlarmTrapEntry 1 }
+
+systemAlarmTime OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Local date and time when event occured, format as YYYY-MM-DD hh:mm:ss."
+	::= { systemAlarmTrapEntry 2 }
+
+systemAlarmStatusChange OBJECT-TYPE
+	SYNTAX AlarmStatusChange
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Indicates 'activated' (0) or 'deactivated' (1) alarm events."
+	::= { systemAlarmTrapEntry 3 }
+
+systemAlarmSeverity OBJECT-TYPE
+	SYNTAX AlarmSeverity
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "The severity of the alarm. One of
+		(1) informational
+		(2) warning
+		(3) critical"
+	::= { systemAlarmTrapEntry 4 }
+	
+systemAlarmDescription OBJECT-TYPE
+	SYNTAX DisplayString
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Free-text description of alarm."
+	::= { systemAlarmTrapEntry 5 }
+	
+systemAlarmId OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Alarm id."
+	::= { systemAlarmTrapEntry 6 }
+	
+systemAlarmEquipId OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Alarm equipment id."
+	::= { systemAlarmTrapEntry 7 }	
+
+systemAlarmEquipTypeId OBJECT-TYPE
+	SYNTAX Integer32
+	MAX-ACCESS read-only
+	STATUS current
+	DESCRIPTION "Alarm equipment type id."
+	::= { systemAlarmTrapEntry 8 }
+	
+	
+------------------------------------------------------------
+-- System Alarm Trap { 13400.3.255 }
+------------------------------------------------------------
+
+systemAlarmTrap OBJECT IDENTIFIER ::= { dcs 255 }
+
+systemAlarmTrapDefine NOTIFICATION-TYPE
+	OBJECTS {
+		systemAlarmIndex,
+		systemAlarmTime,
+		systemAlarmStatusChange,
+		systemAlarmSeverity,
+		systemAlarmDescription,
+		systemAlarmId,
+		systemAlarmEquipId,
+		systemAlarmEquipTypeId }
+	STATUS current
+	DESCRIPTION "
+		An alarm trap is sent when an alarm occurs (activated) or
+		returns to normal state (deactivated). Alarm traps are logged
+		in alarmTrapTable. Variables in this trap:
+		* systemAlarmIndex - The unique sequence number of this alarm trap.
+		* systemAlarmTime - Date and time when event occured (local time).
+		* systemAlarmStatusChange - (0) activated or (1) deactivated.
+		* systemAlarmSeverity - The severity of the alarm..
+		* systemAlarmId - Alarm id.
+		* systemAlarmEquipId - Alarm equipment id.
+		* systemAlarmEquipTypeId - Alarm equipment type id."
+	::= { systemAlarmTrap 1 }
+	
+	
+------------------------------------------------------------
+-- End of MIB definitions
+------------------------------------------------------------
+END
+
