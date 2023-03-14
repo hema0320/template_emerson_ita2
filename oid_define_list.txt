@@ -1,0 +1,203 @@
+iso									
+org									
+dod									
+internet							
+directory							
+mgmt								
+mib-2								
+transmission						
+experimental						
+private								
+enterprises							
+security							
+snmpV2								
+snmpDomains							
+snmpProxys							
+snmpModules							
+enp								: 1.3.6.1.4.1.13400
+products						: 1.3.6.1.4.1.13400.2
+eNP-UPS-ITA2					: 1.3.6.1.4.1.13400.2.4067
+AlarmSeverity
+AlarmStatusChange
+ident								
+identManufacturer				: 1.3.6.1.4.1.13400.2.4067.1.1.0
+identModel						: 1.3.6.1.4.1.13400.2.4067.1.2.0
+identIndex						: 1.3.6.1.4.1.13400.2.4067.1.3.0
+system								
+group2								
+phaseainputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.2.0
+phasebinputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.3.0
+phasecinputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.4.0
+phaseaoutputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.5.0
+phaseboutputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.6.0
+phasecoutputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.7.0
+phaseaoutputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.8.0
+phaseboutputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.9.0
+phasecoutputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.10.0
+outputfrequency					: 1.3.6.1.4.1.13400.2.4067.2.2.11.0
+inputphasenumber				: 1.3.6.1.4.1.13400.2.4067.2.2.12.0		unknown(0),simplex(1),duplex(2),threephase(3)
+lineabinputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.13.0
+linebcinputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.14.0
+linecainputvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.15.0
+phaseainputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.16.0
+phasebinputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.17.0
+phasecinputcurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.18.0
+systeminputfrequency			: 1.3.6.1.4.1.13400.2.4067.2.2.19.0
+phaseainputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.20.0
+phasebinputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.21.0
+phasecinputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.22.0
+bypassavoltagea					: 1.3.6.1.4.1.13400.2.4067.2.2.23.0
+bypassbvoltageb					: 1.3.6.1.4.1.13400.2.4067.2.2.24.0
+bypasscvoltagec					: 1.3.6.1.4.1.13400.2.4067.2.2.25.0
+bypasslineabvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.26.0
+bypasslinebcvoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.27.0
+bypasslinecavoltage				: 1.3.6.1.4.1.13400.2.4067.2.2.28.0
+bypassfrequency					: 1.3.6.1.4.1.13400.2.4067.2.2.29.0
+outputphasenumber				: 1.3.6.1.4.1.13400.2.4067.2.2.30.0		unknown(0),simplex(1),duplex(2),threephase(3)
+phaseaoutputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.31.0
+phaseboutputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.32.0
+phasecoutputpowerfactor			: 1.3.6.1.4.1.13400.2.4067.2.2.33.0
+localphaseaoutputpeakratio		: 1.3.6.1.4.1.13400.2.4067.2.2.34.0
+localphaseboutputpeakratio		: 1.3.6.1.4.1.13400.2.4067.2.2.35.0
+localphasecoutputpeakratio		: 1.3.6.1.4.1.13400.2.4067.2.2.36.0
+localphaseaoutputactivepow		: 1.3.6.1.4.1.13400.2.4067.2.2.37.0
+localphaseboutputactivepow		: 1.3.6.1.4.1.13400.2.4067.2.2.38.0
+localphasecoutputactivepow		: 1.3.6.1.4.1.13400.2.4067.2.2.39.0
+localphaseaoutputapparentp		: 1.3.6.1.4.1.13400.2.4067.2.2.40.0
+localphaseboutputapparentp		: 1.3.6.1.4.1.13400.2.4067.2.2.41.0
+localphasecoutputapparentp		: 1.3.6.1.4.1.13400.2.4067.2.2.42.0
+localphaseaoutputloadperce		: 1.3.6.1.4.1.13400.2.4067.2.2.43.0
+localphaseboutputloadperce		: 1.3.6.1.4.1.13400.2.4067.2.2.44.0
+localphasecoutputloadperce		: 1.3.6.1.4.1.13400.2.4067.2.2.45.0
+systemphaseaoutputpowerfac		: 1.3.6.1.4.1.13400.2.4067.2.2.46.0
+systemphaseboutputpowerfac		: 1.3.6.1.4.1.13400.2.4067.2.2.47.0
+systemphasecoutputpowerfac		: 1.3.6.1.4.1.13400.2.4067.2.2.48.0
+systemphaseaoutputactivepo		: 1.3.6.1.4.1.13400.2.4067.2.2.49.0
+systemphaseboutputactivepo		: 1.3.6.1.4.1.13400.2.4067.2.2.50.0
+systemphasecoutputactivepo		: 1.3.6.1.4.1.13400.2.4067.2.2.51.0
+systemphaseaoutputapparent		: 1.3.6.1.4.1.13400.2.4067.2.2.52.0
+systemphaseboutputapparent		: 1.3.6.1.4.1.13400.2.4067.2.2.53.0
+systemphasecoutputapparent		: 1.3.6.1.4.1.13400.2.4067.2.2.54.0
+parallelmachinenumber			: 1.3.6.1.4.1.13400.2.4067.2.2.55.0
+upsrunningtime					: 1.3.6.1.4.1.13400.2.4067.2.2.56.0
+batteryvoltage					: 1.3.6.1.4.1.13400.2.4067.2.2.57.0
+batterychargingcurrent			: 1.3.6.1.4.1.13400.2.4067.2.2.58.0
+batterydischargecurrent			: 1.3.6.1.4.1.13400.2.4067.2.2.59.0
+negativebatteryvoltage			: 1.3.6.1.4.1.13400.2.4067.2.2.60.0
+negativebatterychargecurrent	: 1.3.6.1.4.1.13400.2.4067.2.2.61.0
+negativebatterydischargecurr	: 1.3.6.1.4.1.13400.2.4067.2.2.62.0
+batterybackuptime				: 1.3.6.1.4.1.13400.2.4067.2.2.63.0
+batterytemperature				: 1.3.6.1.4.1.13400.2.4067.2.2.64.0
+ambienttemperature				: 1.3.6.1.4.1.13400.2.4067.2.2.65.0
+batterycurrentcapacity			: 1.3.6.1.4.1.13400.2.4067.2.2.66.0
+batterydischargetimes			: 1.3.6.1.4.1.13400.2.4067.2.2.67.0
+inputpower						: 1.3.6.1.4.1.13400.2.4067.2.2.68.0
+outputpower						: 1.3.6.1.4.1.13400.2.4067.2.2.69.0
+powersupply						: 1.3.6.1.4.1.13400.2.4067.2.2.70.0		upsshutdown(0),utilityonline(1),onbattery(2),onbypass(3),upsonunionmode(4)
+inputpowerstatus				: 1.3.6.1.4.1.13400.2.4067.2.2.71.0		utilityonline(0),onbattery(1),upsonunionmode(2),upsshutdown(3)
+batterystatus					: 1.3.6.1.4.1.13400.2.4067.2.2.72.0		nondischargeandnonrechargeable(0),floatcharging(1),equalizationcharging(2),discharging(3),inselftest(4),nobattery(5)
+batterynegativegroupstatus		: 1.3.6.1.4.1.13400.2.4067.2.2.73.0		nondischargeandnonrechargeable(0),floatcharging(1),equalizationcharging(2),discharging(3),inselftest(4),nobattery(5)
+chargerstatus					: 1.3.6.1.4.1.13400.2.4067.2.2.74.0		chargeron(0),chargeroff(1)
+parallelsystempowerstate		: 1.3.6.1.4.1.13400.2.4067.2.2.75.0		maininverterpowersupply(0),onbattery(1),onbypass(2),upsshutdown(3)
+ineernetworkconnectionstatus	: 1.3.6.1.4.1.13400.2.4067.2.2.76.0		connected(0),disconnected(1)
+outlet1switchstatus				: 1.3.6.1.4.1.13400.2.4067.2.2.77.0		turnedon(0),turnedoff(1)
+outlet2switchstatus				: 1.3.6.1.4.1.13400.2.4067.2.2.78.0		turnedon(0),turnedoff(1)
+inputabnormal					: 1.3.6.1.4.1.13400.2.4067.2.2.79.0		normal(0),alarm(1)
+systemovertemp					: 1.3.6.1.4.1.13400.2.4067.2.2.80.0		normal(0),alarm(1)
+systembatterylowprewarning		: 1.3.6.1.4.1.13400.2.4067.2.2.81.0		normal(0),alarm(1)
+inputphasereversed				: 1.3.6.1.4.1.13400.2.4067.2.2.82.0		normal(0),alarm(1)
+inputneutrallost				: 1.3.6.1.4.1.13400.2.4067.2.2.83.0		normal(0),alarm(1)
+inputgroundlost					: 1.3.6.1.4.1.13400.2.4067.2.2.84.0		normal(0),alarm(1)
+rectifieroverload				: 1.3.6.1.4.1.13400.2.4067.2.2.85.0		normal(0),alarm(1)
+batterycabinetnotconnected		: 1.3.6.1.4.1.13400.2.4067.2.2.86.0		normal(0),alarm(1)
+inverteroverload				: 1.3.6.1.4.1.13400.2.4067.2.2.87.0		normal(0),alarm(1)
+lbsabnormal						: 1.3.6.1.4.1.13400.2.4067.2.2.88.0		normal(0),alarm(1)
+outputpending					: 1.3.6.1.4.1.13400.2.4067.2.2.89.0		normal(0),alarm(1)
+outputdisabled					: 1.3.6.1.4.1.13400.2.4067.2.2.90.0		normal(0),alarm(1)
+bypassabnormal					: 1.3.6.1.4.1.13400.2.4067.2.2.91.0		normal(0),alarm(1)
+bypassabnormalinecomode			: 1.3.6.1.4.1.13400.2.4067.2.2.92.0		normal(0),alarm(1)
+bypassphasereversed				: 1.3.6.1.4.1.13400.2.4067.2.2.92.0		normal(0),alarm(1)
+bypassovercurrent				: 1.3.6.1.4.1.13400.2.4067.2.2.94.0		normal(0),alarm(1)
+bypasscableconnectionabnorma	: 1.3.6.1.4.1.13400.2.4067.2.2.95.0		normal(0),alarm(1)
+batteryreversed					: 1.3.6.1.4.1.13400.2.4067.2.2.96.0		normal(0),alarm(1)
+batterylowprewarning			: 1.3.6.1.4.1.13400.2.4067.2.2.97.0		normal(0),alarm(1)
+batteryvoltabnormal				: 1.3.6.1.4.1.13400.2.4067.2.2.98.0		normal(0),alarm(1)
+nobattery						: 1.3.6.1.4.1.13400.2.4067.2.2.99.0		normal(0),alarm(1)
+batteryovertemp					: 1.3.6.1.4.1.13400.2.4067.2.2.100.0	normal(0),alarm(1)
+batteryaging					: 1.3.6.1.4.1.13400.2.4067.2.2.101.0	normal(0),alarm(1)
+batterytestfailure				: 1.3.6.1.4.1.13400.2.4067.2.2.102.0	normal(0),alarm(1)
+batteryseriesnotqualified		: 1.3.6.1.4.1.13400.2.4067.2.2.103.0	normal(0),alarm(1)
+fanfailure						: 1.3.6.1.4.1.13400.2.4067.2.2.104.0	normal(0),alarm(1)
+repo							: 1.3.6.1.4.1.13400.2.4067.2.2.105.0	normal(0),alarm(1)
+inputneutralgroundabnormal		: 1.3.6.1.4.1.13400.2.4067.2.2.106.0	normal(0),alarm(1)
+versionincompatible				: 1.3.6.1.4.1.13400.2.4067.2.2.107.0	normal(0),alarm(1)
+inputneutralgroundabnormal		: 1.3.6.1.4.1.13400.2.4067.2.2.108.0	normal(0),alarm(1)
+lossofredundancy				: 1.3.6.1.4.1.13400.2.4067.2.2.109.0	normal(0),alarm(1)
+systemoverload					: 1.3.6.1.4.1.13400.2.4067.2.2.110.0	normal(0),alarm(1)
+loadsharingabnormal				: 1.3.6.1.4.1.13400.2.4067.2.2.111.0	normal(0),alarm(1)
+systemparallelsettingsasync		: 1.3.6.1.4.1.13400.2.4067.2.2.112.0	normal(0),alarm(1)
+localparallelsettingsasync		: 1.3.6.1.4.1.13400.2.4067.2.2.113.0	normal(0),alarm(1)
+onmaintenancebypass				: 1.3.6.1.4.1.13400.2.4067.2.2.114.0	normal(0),alarm(1)
+batterymode						: 1.3.6.1.4.1.13400.2.4067.2.2.115.0	normal(0),alarm(1)
+bypassmode						: 1.3.6.1.4.1.13400.2.4067.2.2.116.0	normal(0),alarm(1)
+dcbusabnormal					: 1.3.6.1.4.1.13400.2.4067.2.2.117.0	normal(0),alarm(1)
+rectifierfault					: 1.3.6.1.4.1.13400.2.4067.2.2.118.0	normal(0),alarm(1)
+dcdcfault						: 1.3.6.1.4.1.13400.2.4067.2.2.119.0	normal(0),alarm(1)
+chargerfault					: 1.3.6.1.4.1.13400.2.4067.2.2.120.0	normal(0),alarm(1)
+inputbackfeed					: 1.3.6.1.4.1.13400.2.4067.2.2.121.0	normal(0),alarm(1)
+inverterfault					: 1.3.6.1.4.1.13400.2.4067.2.2.122.0	normal(0),alarm(1)
+inverterrelaywelded				: 1.3.6.1.4.1.13400.2.4067.2.2.123.0	normal(0),alarm(1)
+bypassbackfeed					: 1.3.6.1.4.1.13400.2.4067.2.2.124.0	normal(0),alarm(1)
+auxiliarypowerfault				: 1.3.6.1.4.1.13400.2.4067.2.2.125.0	normal(0),alarm(1)
+internalcommunicationsfault		: 1.3.6.1.4.1.13400.2.4067.2.2.126.0	normal(0),alarm(1)
+outputshortcircuit				: 1.3.6.1.4.1.13400.2.4067.2.2.127.0	normal(0),alarm(1)
+outputoffandvoltageisnotz		: 1.3.6.1.4.1.13400.2.4067.2.2.128.0	normal(0),alarm(1)
+parallelcommunicationbreakdow	: 1.3.6.1.4.1.13400.2.4067.2.2.129.0	normal(0),alarm(1)
+shutoffduetoovertemp			: 1.3.6.1.4.1.13400.2.4067.2.2.130.0	normal(0),alarm(1)
+outputoffoverloadandbypass		: 1.3.6.1.4.1.13400.2.4067.2.2.131.0	normal(0),alarm(1)
+loadoffduetooutputshort			: 1.3.6.1.4.1.13400.2.4067.2.2.132.0	normal(0),alarm(1)
+eodturnoff						: 1.3.6.1.4.1.13400.2.4067.2.2.133.0	normal(0),alarm(1)
+remoteshutdown					: 1.3.6.1.4.1.13400.2.4067.2.2.134.0	normal(0),alarm(1)
+guaranteedshutdown				: 1.3.6.1.4.1.13400.2.4067.2.2.135.0	normal(0),alarm(1)
+loadoffduetoshutdownonbat		: 1.3.6.1.4.1.13400.2.4067.2.2.136.0	normal(0),alarm(1)
+outputoffbypassunavailable		: 1.3.6.1.4.1.13400.2.4067.2.2.137.0	normal(0),alarm(1)
+remotepoweron					: 1.3.6.1.4.1.13400.2.4067.2.2.138.0	normal(0),alarm(1)
+remoteshutoff					: 1.3.6.1.4.1.13400.2.4067.2.2.139.0	normal(0),alarm(1)
+batteryteststarted				: 1.3.6.1.4.1.13400.2.4067.2.2.140.0	normal(0),alarm(1)
+batteryteststopped				: 1.3.6.1.4.1.13400.2.4067.2.2.141.0	normal(0),alarm(1)
+localsettingssyncok				: 1.3.6.1.4.1.13400.2.4067.2.2.142.0	normal(0),alarm(1)
+systemsettingssyncok			: 1.3.6.1.4.1.13400.2.4067.2.2.143.0	normal(0),alarm(1)
+batterytoutilitytransition		: 1.3.6.1.4.1.13400.2.4067.2.2.144.0	normal(0),alarm(1)
+manualshutdown					: 1.3.6.1.4.1.13400.2.4067.2.2.145.0	normal(0),alarm(1)
+operatingoninverter				: 1.3.6.1.4.1.13400.2.4067.2.2.146.0	normal(0),alarm(1)
+manualpoweron					: 1.3.6.1.4.1.13400.2.4067.2.2.147.0	normal(0),alarm(1)
+batterytotalrunningtime			: 1.3.6.1.4.1.13400.2.4067.2.2.148.0
+batterytotaldischargingtime		: 1.3.6.1.4.1.13400.2.4067.2.2.149.0
+parallelnoabnormal				: 1.3.6.1.4.1.13400.2.4067.2.2.150.0	normal(0),alarm(1)
+parallelbypasscableconnectio	: 1.3.6.1.4.1.13400.2.4067.2.2.151.0	normal(0),alarm(1)
+onintelligentsleepmode			: 1.3.6.1.4.1.13400.2.4067.2.2.152.0	normal(0),alarm(1)
+batterycabinetconnectabnorma	: 1.3.6.1.4.1.13400.2.4067.2.2.153.0	normal(0),alarm(1)
+parallelcableconnectionabnor	: 1.3.6.1.4.1.13400.2.4067.2.2.154.0	normal(0),alarm(1)
+systemfault						: 1.3.6.1.4.1.13400.2.4067.2.2.155.0	normal(0),alarm(1)
+batteryeod						: 1.3.6.1.4.1.13400.2.4067.2.2.156.0	normal(0),alarm(1)
+bypassdisable					: 1.3.6.1.4.1.13400.2.4067.2.2.157.0	normal(0),alarm(1)
+upshasnooutput					: 1.3.6.1.4.1.13400.2.4067.2.2.158.0	normal(0),alarm(1)
+rectifiersoftstartfail			: 1.3.6.1.4.1.13400.2.4067.2.2.159.0	normal(0),alarm(1)
+systemwarning					: 1.3.6.1.4.1.13400.2.4067.2.2.160.0	normal(0),alarm(1)
+outputvoltageabnormal			: 1.3.6.1.4.1.13400.2.4067.2.2.161.0	normal(0),alarm(1)
+inputbackfeed					: 1.3.6.1.4.1.13400.2.4067.2.2.162.0	normal(0),alarm(1)
+bypassbackfeed					: 1.3.6.1.4.1.13400.2.4067.2.2.163.0	normal(0),alarm(1)
+communicationstatus				: 1.3.6.1.4.1.13400.2.4067.2.2.164.0	normal(0),failure(1)
+remotebatteryselftest
+remotemaintenancebatteryself		
+turnoffupsoutput					
+turnonupsinstantly
+turnoffupsinstantly					
+openinverterwithdelay				
+closeoutputwithdelay				
+delayedshutdowncancellation			
+delaytimeofselfstart				
+intervalofbatteryselftest		: 1.3.6.1.4.1.13400.2.4067.2.2.175.0	forbidden(0),weeks(1),weeks(2),weeks(3),weeks(4),weeks(5)
+upsworkingmode					: 1.3.6.1.4.1.13400.2.4067.2.2.176.0	normalmode(0),ecomode(1)
+selfstartsetting				: 1.3.6.1.4.1.13400.2.4067.2.2.177.0	forbidden(0),allow(1)
+
