@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.0'
-  date: '2023-03-15T01:36:03Z'
+  date: '2023-04-14T00:17:50Z'
   groups:
     -
       uuid: 112c5fe4dd3d4da588ebbc743f511a3f
@@ -16,7 +16,7 @@ zabbix_export:
       description: |
         ## Overview
         
-        Includes 47 items, 1 Trigger, 8 Graphs
+        Includes 57 items, 1 Trigger, 8 Graphs
         
         
         Please set {$SNMP\_COMMUNITY} macro for host.
@@ -31,7 +31,7 @@ zabbix_export:
           name: 'Ambient Temperature'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.65.0
-          key: BatteryEnvironmentTemperature
+          key: AmbientTemperature
           delay: 30s
           value_type: FLOAT
           units: °C
@@ -43,16 +43,70 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Status'
+          triggers:
+            -
+              uuid: 7931e777b3b04c4f8cb73882ecf85c1b
+              expression: 'last(/Vertiv ITA2/AmbientTemperature)>35'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/AmbientTemperature)<35'
+              name: 'Ambient Temperature Above 35C'
+              priority: HIGH
+        -
+          uuid: 9992541d83ef40f283bba5db56e6387b
+          name: 'Battery Current Capacity'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.66.0
+          key: BatteryCurrentCapacity
+          delay: 30s
+          units: '%'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Battery'
+          triggers:
+            -
+              uuid: 77d3711718254d09b82dc67a27f1606d
+              expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)<20'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)>20'
+              name: 'Battery capacity below 20%'
+              priority: DISASTER
+            -
+              uuid: 741caae7a1f349cc85387744616ac7b0
+              expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)<30'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)>30'
+              name: 'Battery capacity below 30%'
+              priority: HIGH
+            -
+              uuid: ca9b56be871c4e59bf315318a70862c1
+              expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)<40'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)>40'
+              name: 'Battery capacity below 40%'
+              priority: HIGH
+            -
+              uuid: 4d02c419d2ea4e66b161b38509c68603
+              expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)<50'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryCurrentCapacity)>50'
+              name: 'Battery capacity below 50%'
+              priority: AVERAGE
         -
           uuid: d6b57979b0c8439d98a86b4da844337f
-          name: 'Battery Temperature'
+          name: 'Battery Status'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.64.0
-          key: BatteryTemperature
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.72.0
+          key: BatteryStatus
           delay: 30s
-          value_type: FLOAT
-          units: °C
+          valuemap:
+            name: batteryStatus
           preprocessing:
             -
               type: MULTIPLIER
@@ -61,7 +115,23 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Battery'
+          triggers:
+            -
+              uuid: 18add09cac0a4199beea50352b476572
+              expression: 'last(/Vertiv ITA2/BatteryStatus)=0'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryStatus)=1 or last(/Vertiv ITA2/BatteryStatus)=2'
+              name: 'Battery on Non-Discharge and Non-Rechargeable'
+              status: DISABLED
+              priority: DISASTER
+            -
+              uuid: b17dabf086df447fb57481203b4d95b8
+              expression: 'last(/Vertiv ITA2/BatteryStatus)=5'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/BatteryStatus)=1 or last(/Vertiv ITA2/BatteryStatus)=2'
+              name: 'No battery'
+              priority: HIGH
         -
           uuid: 1d66e50787a44175a3b87a2ddcf6c0bc
           name: 'Battery Time Remaining'
@@ -78,7 +148,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Battery'
         -
           uuid: ecc7eb4a8e814554acd351803fdb1866
           name: 'ByPass Output Frequency'
@@ -96,7 +166,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Bypass'
         -
           uuid: 72080ce31f7e4eec8e2bb798b7be13e8
           name: 'Bypass A Voltage - A'
@@ -114,7 +184,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Bypass'
         -
           uuid: f29b79d67a49467b8a3599516f4f01b7
           name: 'Bypass B Voltage - B'
@@ -132,7 +202,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Bypass'
         -
           uuid: 6583f5f798d448b7a75f370366876276
           name: 'Bypass C Voltage - C'
@@ -150,7 +220,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Bypass'
         -
           uuid: 87e52c23a46749e2bf50ac4c2b280e18
           name: 'Device reachability using ICMP'
@@ -167,7 +237,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Information(s)
+              value: 'UPS Status'
           triggers:
             -
               uuid: ff2c72ec140645acac03b94a4111731c
@@ -191,7 +261,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: 852726a2a1334ee58e19c4ffbe4b133a
           name: 'Input Current - Phase B'
@@ -209,7 +279,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: 47d36a6573f649c181ccdb012288928d
           name: 'Input Current - Phase C'
@@ -227,7 +297,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: d064edfb3c9e4308bb929017cd84af67
           name: 'Input Frequency'
@@ -245,7 +315,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: ef3eb2f1930642499e26aad9e4c0e906
           name: 'Input Line Voltage - Phase A'
@@ -263,7 +333,15 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
+          triggers:
+            -
+              uuid: 5b49f0f06d2f45f0b1a7dc92ce435ba5
+              expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseA)<100'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseA)>200'
+              name: 'Input voltage on phase A failed'
+              priority: HIGH
         -
           uuid: f83a954d79264bbb95bc14cf1959faff
           name: 'Input Line Voltage - Phase B'
@@ -281,7 +359,15 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
+          triggers:
+            -
+              uuid: 84e65fa284be4e15884a8b823465a82e
+              expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseB)<100'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseB)>200'
+              name: 'Input voltage on phase B failed'
+              priority: HIGH
         -
           uuid: fbb942afc7604f64a8f98c3a16650398
           name: 'Input Line Voltage - Phase C'
@@ -299,7 +385,15 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
+          triggers:
+            -
+              uuid: 6c32338612f74baca5b8c494dbd9974e
+              expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseC)<100'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/InputlineVoltagePhaseC)>200'
+              name: 'Input voltage on phase C failed'
+              priority: HIGH
         -
           uuid: b266b78382164cfbae84dc02d8a7f47e
           name: 'Input Phase Voltage - Phase A'
@@ -317,7 +411,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: 48ad3e5eb32545698bb638edccca0128
           name: 'Input Phase Voltage - Phase B'
@@ -335,7 +429,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: 8d97bd4541bc4579a5313765e0c5b001
           name: 'Input Phase Voltage - Phase C'
@@ -353,7 +447,25 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
+        -
+          uuid: 134ab747e83d4771b8624dfc944c4f1b
+          name: 'Input Power'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.13400.2.4067.2.2.68.0
+          key: Inputpower
+          delay: 30s
+          value_type: FLOAT
+          units: KWH
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Input'
         -
           uuid: 72f957b20507480b920cb25281ddd906
           name: 'Input Power Factor - Phase A'
@@ -371,7 +483,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: ac6aefe59052480bb4ccbb4e5db07a42
           name: 'Input Power Factor - Phase B'
@@ -389,7 +501,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
         -
           uuid: cfcf88b6b3c9425e942286ce2152df5d
           name: 'Input Power Factor - Phase C'
@@ -407,13 +519,31 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Input'
+        -
+          uuid: 51e954c5e58c4627be262578f4c1e1df
+          name: 'Input Power Phase number'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.12.0
+          key: InputPowerPhaseNumber
+          delay: 30s
+          valuemap:
+            name: phaseNumberStatus
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Input'
         -
           uuid: 0de6934d9a0648c4aade972c85e13a9c
-          name: 'Output Active Power - Phase A'
+          name: 'Local Output Active Power - Phase A'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.37.0
-          key: OutputActivePowerPhaseA
+          key: LocalOutputActivePowerPhaseA
           delay: 30s
           value_type: FLOAT
           units: kW
@@ -425,13 +555,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 135f0b086c1b41958b25ad459af1a3ba
-          name: 'Output Active Power - Phase B'
+          name: 'Local Output Active Power - Phase B'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.38.0
-          key: OutputActivePowerPhaseB
+          key: LocalOutputActivePowerPhaseB
           delay: 30s
           value_type: FLOAT
           units: kW
@@ -443,13 +573,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 070ce4162f294bffadd0b11c568fc14d
-          name: 'Output Active Power - Phase C'
+          name: 'Local Output Active Power - Phase C'
           type: SNMP_AGENT
           snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.39.0
-          key: OutputActivePowerPhaseC
+          key: LocalOutputActivePowerPhaseC
           delay: 30s
           value_type: FLOAT
           units: kW
@@ -461,15 +591,16 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 8d0a98354e3f46ff96948a995af08f11
-          name: 'Output Crest Factor - Phase 1'
+          name: 'Local Output Apparent Power - Phase A'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.38.0
-          key: OutputCrestFactorPhase1
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.40.0
+          key: LocalOutputApparentPowerPhaseA
           delay: 30s
           value_type: FLOAT
+          units: KVA
           preprocessing:
             -
               type: MULTIPLIER
@@ -478,15 +609,16 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: fd02ca896d5749a68d3fc9defc5a799e
-          name: 'Output Crest Factor - Phase 2'
+          name: 'Local Output Apparent Power - Phase B'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.39.0
-          key: OutputCrestFactorPhase2
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.41.0
+          key: LocalOutputApparentPowerPhaseB
           delay: 30s
           value_type: FLOAT
+          units: KVA
           preprocessing:
             -
               type: MULTIPLIER
@@ -495,15 +627,16 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 3e87c184680c4ca985a5a8d96a213fc5
-          name: 'Output Crest Factor - Phase 3'
+          name: 'Local Output Apparent Power - Phase C'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.40.0
-          key: OutputCrestFactorPhase3
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.42.0
+          key: LocalOutputApparentPowerPhaseC
           delay: 30s
           value_type: FLOAT
+          units: KVA
           preprocessing:
             -
               type: MULTIPLIER
@@ -512,13 +645,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 0a410e2d933840ee8b381c4469c24dcc
-          name: 'Output Current - Phase 1'
+          name: 'Output Current - Phase A'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.19.0
-          key: OutputCurrentPhase1
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.8.0
+          key: OutputCurrentPhaseA
           delay: 30s
           value_type: FLOAT
           units: A
@@ -530,13 +663,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 477eadeb275d4511ba70154ac97d7c5e
-          name: 'Output Current - Phase 2'
+          name: 'Output Current - Phase B'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.20.0
-          key: OutputCurrentPhase2
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.9.0
+          key: OutputCurrentPhaseB
           delay: 30s
           value_type: FLOAT
           units: A
@@ -548,13 +681,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 82da4e57473b4e2c93782caff468100d
-          name: 'Output Current - Phase 3'
+          name: 'Output Current - Phase C'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.21.0
-          key: OutputCurrentPhase3
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.10.0
+          key: OutputCurrentPhaseC
           delay: 30s
           value_type: FLOAT
           units: A
@@ -566,7 +699,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: e62bf8a1e8ff444ba67382d847487e77
           name: 'Output Frequency'
@@ -584,13 +717,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 9ae67f27d5dc4813a092d7f5c252fa7f
-          name: 'Output Load - Phase 1'
+          name: 'Output Load PercenT - Phase A'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.35.0
-          key: OutputLoadPhase1
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.43.0
+          key: OutputLoadPercenTPhaseA
           delay: 30s
           value_type: FLOAT
           units: '%'
@@ -602,13 +735,21 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
+          triggers:
+            -
+              uuid: ac0525fff6934dd091ebfe94c35cdc63
+              expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseA)>"60"'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseA)<"60"'
+              name: 'Phase A output capacity above 60%'
+              priority: HIGH
         -
           uuid: 38fbc6bfe9034c6e95c3396560ff8a34
-          name: 'Output Load - Phase 2'
+          name: 'Output Load PercenT - Phase B'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.36.0
-          key: OutputLoadPhase2
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.44.0
+          key: OutputLoadPercenTPhaseB
           delay: 30s
           value_type: FLOAT
           units: '%'
@@ -620,13 +761,21 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
+          triggers:
+            -
+              uuid: 54e472d22845434c836f34dcbc2ae9d3
+              expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseB)>"60"'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseB)<"60"'
+              name: 'Phase B output capacity above 60%'
+              priority: HIGH
         -
           uuid: 2a4a41cb278b4b90a8f1353b03af435e
-          name: 'Output Load - Phase 3'
+          name: 'Output Load PercenT - Phase C'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.37.0
-          key: OutputLoadPhase3
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.45.0
+          key: OutputLoadPercenTPhaseC
           delay: 30s
           value_type: FLOAT
           units: '%'
@@ -638,16 +787,24 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
+          triggers:
+            -
+              uuid: a8b42458b35f46809b225bbce7879061
+              expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseC)>"60"'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/OutputLoadPercenTPhaseC)<"60"'
+              name: 'Phase C output capacity above 60%'
+              priority: HIGH
         -
-          uuid: 4b5da0bbd60444b3ac2ed39e591c425d
-          name: 'Output Power Factor - Phase 1'
+          uuid: 0d7c94781b01469ba955f5be7ac2b62c
+          name: 'Output Power'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.23.0
-          key: outputPowerFactorPhase1
+          snmp_oid: 1.3.6.1.4.1.13400.2.4067.2.2.69.0
+          key: OutputPower
           delay: 30s
           value_type: FLOAT
-          units: kW
+          units: KWH
           preprocessing:
             -
               type: MULTIPLIER
@@ -656,16 +813,16 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
-          uuid: f576f961a52e4080866b4943b16901c7
-          name: 'Output Power Factor - Phase 2'
+          uuid: 641a0d7bcaf44dc883e9d4439cba2ca4
+          name: 'Output Power Phase number'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.24.0
-          key: outputPowerFactorPhase2
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.30.0
+          key: OutputPowerPhaseNumber
           delay: 30s
-          value_type: FLOAT
-          units: kW
+          valuemap:
+            name: phaseNumberStatus
           preprocessing:
             -
               type: MULTIPLIER
@@ -674,85 +831,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
-        -
-          uuid: d8fae35baf984706bab8d38de873f988
-          name: 'Output Power Factor - Phase 3'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.25.0
-          key: outputPowerFactorPhase3
-          delay: 30s
-          value_type: FLOAT
-          units: kW
-          preprocessing:
-            -
-              type: MULTIPLIER
-              parameters:
-                - '0.1'
-          tags:
-            -
-              tag: Application
-              value: Operational
-        -
-          uuid: 5d46f7aa940f4b998bdc05417e18801b
-          name: 'Output Reactive Power - Phase 1'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.29.0
-          key: OutputReactivePowerPhase1
-          delay: 30s
-          value_type: FLOAT
-          units: kVAR
-          preprocessing:
-            -
-              type: MULTIPLIER
-              parameters:
-                - '0.1'
-          tags:
-            -
-              tag: Application
-              value: Operational
-        -
-          uuid: fa8463d2ab1b4c2ba3f1174a559ea13b
-          name: 'Output Reactive Power - Phase 2'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.30.0
-          key: OutputReactivePowerPhase2
-          delay: 30s
-          value_type: FLOAT
-          units: kVAR
-          preprocessing:
-            -
-              type: MULTIPLIER
-              parameters:
-                - '0.1'
-          tags:
-            -
-              tag: Application
-              value: Operational
-        -
-          uuid: c3e484b601bd41b68650494a3cd1cd14
-          name: 'Output Reactive Power - Phase 3'
-          type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.31.0
-          key: OutputReactivePowerPhase3
-          delay: 30s
-          value_type: FLOAT
-          units: kVAR
-          preprocessing:
-            -
-              type: MULTIPLIER
-              parameters:
-                - '0.1'
-          tags:
-            -
-              tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 7c0bb2c83c574194bb9e2b7d38e6ab8c
-          name: 'Output Voltage - Phase 1'
+          name: 'Output Voltage - Phase A'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.16.0
-          key: OutputVoltagePhase1
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.5.0
+          key: OutputVoltagePhaseA
           delay: 30s
           value_type: FLOAT
           units: V
@@ -764,13 +849,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: e10673591c694962b27d870c3aa0fe49
-          name: 'Output Voltage - Phase 2'
+          name: 'Output Voltage - Phase B'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.17.0
-          key: OutputVoltagePhase2
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.6.0
+          key: OutputVoltagePhaseB
           delay: 30s
           value_type: FLOAT
           units: V
@@ -782,13 +867,13 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: d1d96144b0f5423a98b8f7ef2f87df0a
-          name: 'Output Voltage - Phase 3'
+          name: 'Output Voltage - Phase C'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.2.4.18.0
-          key: OutputVoltagePhase3
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.7.0
+          key: OutputVoltagePhaseC
           delay: 30s
           value_type: FLOAT
           units: V
@@ -800,7 +885,7 @@ zabbix_export:
           tags:
             -
               tag: Application
-              value: Operational
+              value: 'UPS Output'
         -
           uuid: 088d1bebd9ea4c489764c56dcdbae6cb
           name: Contact
@@ -887,25 +972,191 @@ zabbix_export:
           uuid: e660ad896b6140bab519e4cdf378f3bf
           name: 'System Status'
           type: SNMP_AGENT
-          snmp_oid: .1.3.6.1.4.1.13400.2.27.1.3.0
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.155.0
           key: sysStatus
           delay: 30s
           history: 31d
           valuemap:
-            name: systemStatus
+            name: statusDefine
+          tags:
+            -
+              tag: Application
+              value: 'UPS Status'
+        -
+          uuid: 4b5da0bbd60444b3ac2ed39e591c425d
+          name: 'System Output Active Power - Phase A'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.49.0
+          key: SystemOutputActivePowerPhaseA
+          delay: 30s
+          value_type: FLOAT
+          units: kW
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: f576f961a52e4080866b4943b16901c7
+          name: 'System Output Active Power - Phase B'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.50.0
+          key: SystemOutputActivePowerPhaseB
+          delay: 30s
+          value_type: FLOAT
+          units: kW
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: d8fae35baf984706bab8d38de873f988
+          name: 'System Output Active Power - Phase C'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.51.0
+          key: SystemOutputActivePowerPhaseC
+          delay: 30s
+          value_type: FLOAT
+          units: kW
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: 5d46f7aa940f4b998bdc05417e18801b
+          name: 'System Output Apparent Power - Phase A'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.52.0
+          key: SystemOutputApparentPowerPhaseA
+          delay: 30s
+          value_type: FLOAT
+          units: KVA
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: fa8463d2ab1b4c2ba3f1174a559ea13b
+          name: 'System Output Apparent Power - Phase B'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.53.0
+          key: SystemOutputApparentPowerPhaseB
+          delay: 30s
+          value_type: FLOAT
+          units: KVA
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: c3e484b601bd41b68650494a3cd1cd14
+          name: 'System Output Apparent Power - Phase C'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.54.0
+          key: SystemOutputApparentPowerPhaseC
+          delay: 30s
+          value_type: FLOAT
+          units: KVA
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Output'
+        -
+          uuid: 2c4e77141a614c4ca4727c179af5bc0d
+          name: 'UPS Input Power Status'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.71.0
+          key: UPSInputPowerStatus
+          delay: 30s
+          valuemap:
+            name: inputPowerStatus
+          tags:
+            -
+              tag: Application
+              value: 'UPS Status'
+        -
+          uuid: 085f72d51d944fa69bea0113de507a5e
+          name: 'UPS On Battery Total Running Time'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.148.0
+          key: UPSOnBatteryTotalRunningTime
+          delay: 30s
+          units: min
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.1'
+          tags:
+            -
+              tag: Application
+              value: 'UPS Battery'
+        -
+          uuid: b35a24aae513438fb37fe3e65ce3fb82
+          name: 'UPS Power Supply'
+          type: SNMP_AGENT
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.70.0
+          key: UPSPowerSupply
+          delay: 30s
+          valuemap:
+            name: upsPowerStatus
           tags:
             -
               tag: Application
               value: Information(s)
+          triggers:
+            -
+              uuid: ae32f9eb162f4c429b9ff90d4f750006
+              expression: 'last(/Vertiv ITA2/UPSPowerSupply)=2'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/UPSPowerSupply)=1'
+              name: 'UPS on battery power'
+              priority: HIGH
+            -
+              uuid: f3eec8b5c44d4ae2a3db0504c5258772
+              expression: 'last(/Vertiv ITA2/UPSPowerSupply)=3'
+              recovery_mode: RECOVERY_EXPRESSION
+              recovery_expression: 'last(/Vertiv ITA2/UPSPowerSupply)=1'
+              name: 'UPS on bypass mode'
+              priority: AVERAGE
         -
           uuid: 313bee34e0c94364859cac50a65ec458
-          name: Uptime
+          name: 'UPS Running Time'
           type: SNMP_AGENT
-          snmp_oid: 'SNMPv2-MIB::sysUpTime.0'
-          key: sysUpTime
+          snmp_oid: .1.3.6.1.4.1.13400.2.4067.2.2.56.0
+          key: UPSRunningTime
           delay: 30s
           history: 31d
-          units: uptime
+          units: day
           preprocessing:
             -
               type: MULTIPLIER
@@ -916,6 +1167,60 @@ zabbix_export:
               tag: Application
               value: Information(s)
       valuemaps:
+        -
+          uuid: 687102ba11a04f2e904ab665cd4dc90c
+          name: batteryStatus
+          mappings:
+            -
+              value: '0'
+              newvalue: 'Nondischarge And Nonrechargeable'
+            -
+              value: '1'
+              newvalue: 'Float Charging'
+            -
+              value: '2'
+              newvalue: 'Equalization Charging'
+            -
+              value: '3'
+              newvalue: Discharging
+            -
+              value: '4'
+              newvalue: 'In Selftest'
+            -
+              value: '5'
+              newvalue: 'No Battery'
+        -
+          uuid: 60764b25fcb54fd682ac74dec79661b0
+          name: inputPowerStatus
+          mappings:
+            -
+              value: '0'
+              newvalue: 'Utility Online'
+            -
+              value: '1'
+              newvalue: 'On Battery'
+            -
+              value: '2'
+              newvalue: 'UPS On Union Mode'
+            -
+              value: '3'
+              newvalue: 'UPS Shutdown'
+        -
+          uuid: 1428e80c7311487ebab725ea104e7237
+          name: phaseNumberStatus
+          mappings:
+            -
+              value: '0'
+              newvalue: Unknown
+            -
+              value: '1'
+              newvalue: Simplex
+            -
+              value: '2'
+              newvalue: Duplex
+            -
+              value: '3'
+              newvalue: 'Three Phase'
         -
           uuid: aaa616977918458ea31abe1333b30bd1
           name: pingStatus
@@ -928,14 +1233,33 @@ zabbix_export:
               newvalue: Up
         -
           uuid: 662e04488d3742198dc88b982f552ec7
-          name: systemStatus
+          name: statusDefine
           mappings:
             -
-              value: '1'
+              value: '0'
               newvalue: Normal
             -
+              value: '1'
+              newvalue: Alarm
+        -
+          uuid: c1525cd87a8941af8e3b7311ba1f3629
+          name: upsPowerStatus
+          mappings:
+            -
               value: '0'
-              newvalue: Other
+              newvalue: 'UPS Shutdown'
+            -
+              value: '1'
+              newvalue: 'Utility Online'
+            -
+              value: '2'
+              newvalue: 'On Battery'
+            -
+              value: '3'
+              newvalue: 'On Bypass'
+            -
+              value: '4'
+              newvalue: 'UPS On Union Mode'
   graphs:
     -
       uuid: dd03dd38d21549d2a4e7146a8da4c0cf
@@ -946,19 +1270,19 @@ zabbix_export:
           color: 0000CC
           item:
             host: 'Vertiv ITA2'
-            key: OutputLoadPhase1
+            key: OutputLoadPercenTPhaseA
         -
           sortorder: '1'
           color: F63100
           item:
             host: 'Vertiv ITA2'
-            key: OutputLoadPhase2
+            key: OutputLoadPercenTPhaseB
         -
           sortorder: '2'
           color: 2774A4
           item:
             host: 'Vertiv ITA2'
-            key: OutputLoadPhase3
+            key: OutputLoadPercenTPhaseC
     -
       uuid: e817fc223c354c8b84a2a9ede590fb10
       name: 'UPS voltage'
@@ -967,7 +1291,7 @@ zabbix_export:
           color: 0000CC
           item:
             host: 'Vertiv ITA2'
-            key: OutputVoltagePhase1
+            key: OutputVoltagePhaseA
         -
           sortorder: '1'
           color: CC0000
